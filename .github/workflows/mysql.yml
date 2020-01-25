@@ -1,0 +1,15 @@
+name: Test-Mysql
+on: [push]
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    services:
+      mysql:
+        image: mysql
+    steps:
+    - name: mysql port
+      run: echo ${PORT}
+      env:
+        PORT: ${{ job.serices.mysql.ports['3306']}}
+    - name: mysql init script
+      run: mysql -h
