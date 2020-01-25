@@ -10,6 +10,10 @@ jobs:
     - name: mysql port
       run: echo ${PORT}
       env:
-        PORT: ${{ job.serices.mysql.ports['3306']}}
+        PORT: ${{ job.services.mysql.ports['3306']}}
     - name: mysql init script
-      run: mysql -h
+      run: mysql --help
+    - name: run scripts
+      run: ls initdb/*.sql | sort | xargs cat | mysql -uroot -proot -P ${PORT} --host mysql
+    - name: query
+      run: echo "SELECT COUNT(*) from repositories;" | mysql -uroot -proot -P ${PORT} --host mysql
